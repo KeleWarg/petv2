@@ -2,11 +2,15 @@ import React, { useState, useEffect } from 'react';
 
 interface StickyBottomBarProps {
   onOpenChat?: () => void;
+  onShowTopPicks?: () => void;
+  onShowDiveIntoData?: () => void;
   quickDiveSectionRef?: React.RefObject<HTMLDivElement>;
 }
 
 export const StickyBottomBar: React.FC<StickyBottomBarProps> = ({ 
   onOpenChat,
+  onShowTopPicks,
+  onShowDiveIntoData,
   quickDiveSectionRef 
 }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -100,7 +104,7 @@ export const StickyBottomBar: React.FC<StickyBottomBarProps> = ({
 
             {/* Top Editor Picks Button */}
             <div 
-              onClick={handleScrollToCarousel}
+              onClick={onShowTopPicks}
               className="h-14 px-4 py-2 bg-white rounded-[48px] border border-[#F4F5F8] flex items-center justify-center gap-2.5 cursor-pointer hover:border-[#007AC8] transition-all"
             >
               <img src="/EditorPick.svg" alt="Editor Pick" className="hidden sm:block w-6 h-6 flex-shrink-0" />
@@ -116,7 +120,7 @@ export const StickyBottomBar: React.FC<StickyBottomBarProps> = ({
 
             {/* Dive into the data Button */}
             <div 
-              onClick={handleScrollToData}
+              onClick={onShowDiveIntoData}
               className="h-14 px-4 py-2 bg-white rounded-[48px] border border-[#F4F5F8] flex items-center justify-center gap-2.5 cursor-pointer hover:border-[#007AC8] transition-all"
             >
               <img src="/bar-chart-04.svg" alt="Data" className="hidden sm:block w-6 h-6 flex-shrink-0" />

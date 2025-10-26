@@ -7,14 +7,18 @@ import { DetailedInfoSection } from "./sections/DetailedInfoSection/DetailedInfo
 
 export const ElementPc = (): JSX.Element => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const navRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const navigationItems = [
     { title: "Compare Plans", id: "compare-plans" },
     { title: "The Best Providers", id: "best-providers" },
+    { title: "Compare the Best Pet\nInsurance Companies", id: "compare-companies" },
     { title: "Pet Insurance Cost\nfor Dogs and Cats", id: "insurance-cost" },
     { title: "Pet Insurance Plan\nDetails", id: "plan-details" },
     { title: "User Opinion of Pet\nInsurance Companies", id: "user-opinion" },
     { title: "User Feedback on\nClaims Process", id: "claims-feedback" },
+    { title: "How to Choose the\nRight Pet Insurance", id: "how-to-choose" },
+    { title: "Pro Tips From Our\nExperts", id: "pro-tips" },
     { title: "Methodology", id: "methodology" },
     { title: "Frequently Asked\nQuestions", id: "faq" },
   ];
@@ -69,6 +73,17 @@ export const ElementPc = (): JSX.Element => {
     };
   }, [navigationItems]);
 
+  // Auto-scroll navigation to keep active item visible
+  useEffect(() => {
+    if (navRefs.current[activeIndex]) {
+      navRefs.current[activeIndex]?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'nearest'
+      });
+    }
+  }, [activeIndex]);
+
   const insuranceDetails = [
     { label: "Maximum annual coverage", value: "$5,000, Unlimited" },
     {
@@ -88,12 +103,13 @@ export const ElementPc = (): JSX.Element => {
         {/* Responsive layout with proper gutters */}
         <div className="flex gap-6 sm:gap-8 md:gap-11">
           {/* Navigation - spans 3 columns - Visible only on desktop (1024px+) */}
-          <nav className="hidden xl:flex flex-col items-start justify-start gap-3 max-w-[212px] sticky top-[152px] self-start z-[1] bg-white/90 backdrop-blur-sm rounded-lg p-2">
+          <nav className="hidden xl:flex flex-col items-start justify-start gap-3 max-w-[212px] max-h-[60vh] overflow-y-auto sticky top-[152px] self-start z-[1] bg-white/90 backdrop-blur-sm rounded-lg p-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             {navigationItems.map((item, index) => (
               <Button
                 key={item.id}
                 variant={index === activeIndex ? "default" : "secondary"}
                 onClick={() => handleNavigationClick(index, item.id)}
+                ref={(el) => (navRefs.current[index] = el)}
                 className={`navigation-buttons relative flex-[0_0_auto] min-h-[56px] py-2 h-auto ${
                   index === activeIndex
                     ? "bg-white rounded-[40px] shadow-SEM-shadows-4dp text-black hover:bg-white"
@@ -255,6 +271,62 @@ export const ElementPc = (): JSX.Element => {
               </div>
               
               <DetailedInfoSection />
+              
+              {/* Compare the Best Pet Insurance Companies Section */}
+              <section id="compare-companies" className="w-full bg-white pt-8 sm:pt-12 border-t border-[#CED4DB] mt-10">
+                <div className="flex flex-col items-start gap-6 w-full">
+                  <h2 className="text-black text-[24px] sm:text-[24px] md:text-[24px] lg:text-[32px] font-bold leading-[29px] sm:leading-[29px] md:leading-[29px] lg:leading-[39px]" style={{ fontFamily: 'Schnyder S', fontWeight: 700 }}>
+                    Compare the Best Pet Insurance Companies
+                  </h2>
+                  
+                  <p className="text-[#606f7f] text-base leading-[26px] font-normal tracking-[0]" style={{ fontFamily: 'Work Sans' }}>
+                    With all the variations in pricing and coverage details, it can be challenging to compare pet insurance policies in an apples-to-apples way. We found the best way to do it is by prioritizing the benefits that are the most important to you and then comparing prices among the policies that match your must-haves. Here's how we chose the best pet insurance.
+                  </p>
+
+                  <div className="flex flex-col items-start gap-4 w-full">
+                    <h3 className="text-black text-lg font-bold leading-[26px]" style={{ fontFamily: 'Georgia' }}>
+                      Plan Type
+                    </h3>
+                    
+                    <p className="text-[#606f7f] text-base leading-[26px] font-normal tracking-[0]" style={{ fontFamily: 'Work Sans' }}>
+                      If you're shopping for pet insurance, the first thing we recommend looking at is the plan type. We recommend a comprehensive pet insurance policy that covers accidents and illnesses. The three main types of pet insurance can generally be broken down to:
+                    </p>
+
+                    <ul className="flex flex-col gap-4 w-full pl-0">
+                      <li className="flex gap-3 items-start">
+                        <div className="w-2 h-2 rounded-full bg-[#007AC8] mt-2 flex-shrink-0"></div>
+                        <div className="flex-1">
+                          <span className="text-black font-bold text-base leading-[26px]" style={{ fontFamily: 'Georgia' }}>Accident and illness plan.</span>
+                          <span className="text-[#606f7f] text-base leading-[26px] font-normal tracking-[0]" style={{ fontFamily: 'Work Sans' }}> This covers vet bills for accidents (like broken bones) and illnesses (such as cancer, allergies and skin infections).</span>
+                        </div>
+                      </li>
+                      <li className="flex gap-3 items-start">
+                        <div className="w-2 h-2 rounded-full bg-[#007AC8] mt-2 flex-shrink-0"></div>
+                        <div className="flex-1">
+                          <span className="text-black font-bold text-base leading-[26px]" style={{ fontFamily: 'Georgia' }}>Accident-only plan.</span>
+                          <span className="text-[#606f7f] text-base leading-[26px] font-normal tracking-[0]" style={{ fontFamily: 'Work Sans' }}> This covers accident-related vet expenses, such as broken bones, bite wounds and ingested foreign objects. It does not cover illness-related vet expenses.</span>
+                        </div>
+                      </li>
+                      <li className="flex gap-3 items-start">
+                        <div className="w-2 h-2 rounded-full bg-[#007AC8] mt-2 flex-shrink-0"></div>
+                        <div className="flex-1">
+                          <span className="text-black font-bold text-base leading-[26px]" style={{ fontFamily: 'Georgia' }}>Pet wellness plans for routine care.</span>
+                          <span className="text-[#606f7f] text-base leading-[26px] font-normal tracking-[0]" style={{ fontFamily: 'Work Sans' }}> This is typically an add-on policy that covers routine vet expenses like annual wellness exams, flea and heartworm prevention and vaccinations.</span>
+                        </div>
+                      </li>
+                    </ul>
+
+                    <p className="text-[#606f7f] text-base leading-[26px] font-normal tracking-[0]" style={{ fontFamily: 'Work Sans' }}>
+                      You might also see the term "comprehensive plan" when you're shopping for pet insurance. This typically refers to an accident and illness policy plus an optional wellness plan. This is sometimes referred to as a "nose to tail" policy.
+                    </p>
+
+                    <div className="flex items-center gap-1">
+                      <span className="text-black font-bold text-base" style={{ fontFamily: 'Georgia' }}>Related:</span>
+                      <a href="#" className="text-[#007AC8] text-base underline hover:text-[#005a8a] transition-colors" style={{ fontFamily: 'Georgia' }}>What Does Pet Insurance Cover?</a>
+                    </div>
+                  </div>
+                </div>
+              </section>
               
               <PetInsuranceComparison />
             </div>

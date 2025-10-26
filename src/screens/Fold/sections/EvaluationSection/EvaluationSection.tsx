@@ -214,7 +214,7 @@ export const EvaluationSection: React.FC<EvaluationSectionProps> = ({
   return (
     <>
       {/* Pro Tips From Our Experts Section */}
-      <section className="w-full border-t [border-top-style:solid] border-[#CED4DB] flex flex-col pt-16 pb-8">
+      <section id="pro-tips" className="w-full border-t [border-top-style:solid] border-[#CED4DB] flex flex-col pt-16 pb-8">
         <div className="grid grid-cols-12 gap-5">
           <div className="col-span-12">
             <div className="flex flex-col gap-10">

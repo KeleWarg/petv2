@@ -215,6 +215,142 @@ export const PetInsuranceComparison: React.FC<PetInsuranceComparisonProps> = ({ 
                 <CTAButton onClick={onCTAClick} />
               </section>
 
+              {/* How to Choose the Right Pet Insurance Section */}
+              <section id="how-to-choose" className="flex flex-col items-start gap-6 pt-10 w-full border-t border-[#CED4DB]">
+                <div className="flex flex-col items-start gap-6 w-full">
+                  <div className="flex flex-col items-start gap-2 w-full">
+                    <h2 className="text-black text-[32px] sm:text-[32px] md:text-[32px] lg:text-[40px] font-bold leading-[39px] sm:leading-[39px] md:leading-[39px] lg:leading-[48px]" style={{ fontFamily: 'Schnyder S', fontWeight: 700 }}>
+                      How to Choose the Right Pet Insurance
+                    </h2>
+                    <p className="text-[#606f7f] text-base leading-[26px] font-normal tracking-[0]" style={{ fontFamily: 'Work Sans' }}>
+                      These simple steps will get you to the best policy for your situation.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex flex-col items-start gap-8 w-full">
+                  {/* Consider Your Pet's Potential Health Problems */}
+                  <div className="w-full bg-[#f6f8fa] rounded-lg p-6 flex flex-col sm:flex-row gap-6">
+                    <div className="flex-shrink-0">
+                      <div className="w-16 h-16 bg-[#203468] rounded-lg flex items-center justify-center">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M20 26.667v-6.667m0-6.667h.017M36.667 20c0 9.205-7.462 16.667-16.667 16.667S3.333 29.205 3.333 20 10.795 3.333 20 3.333 36.667 10.795 36.667 20z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </div>
+                    </div>
+                    <div className="flex-1 flex flex-col gap-3">
+                      <h3 className="text-black text-xl font-bold leading-[26px]" style={{ fontFamily: 'Schnyder S' }}>
+                        Consider Your Pet's Potential Health Problems
+                      </h3>
+                      <p className="text-[#606f7f] text-base leading-[26px] font-normal tracking-[0]" style={{ fontFamily: 'Work Sans' }}>
+                        Your pet's age, breed and health history can affect what kind of coverage you want. Consult with your vet about your pet's susceptibility to certain illnesses or injuries common to the breed. Also, consider the pet's risk of injury if they spend a lot of time outdoors.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Determine What Policy Features Are Important to You */}
+                  <div className="w-full bg-[#f6f8fa] rounded-lg p-6 flex flex-col sm:flex-row gap-6">
+                    <div className="flex-shrink-0">
+                      <div className="w-16 h-16 bg-[#203468] rounded-lg flex items-center justify-center">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M35 20c0 8.284-6.716 15-15 15-8.284 0-15-6.716-15-15C5 11.716 11.716 5 20 5c8.284 0 15 6.716 15 15z" stroke="white" strokeWidth="2"/>
+                          <path d="M25 17.5l-6.667 6.667L15 20.833" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </div>
+                    </div>
+                    <div className="flex-1 flex flex-col gap-3">
+                      <h3 className="text-black text-xl font-bold leading-[26px]" style={{ fontFamily: 'Schnyder S' }}>
+                        Determine What Policy Features Are Important to You
+                      </h3>
+                      <p className="text-[#606f7f] text-base leading-[26px] font-normal tracking-[0]" style={{ fontFamily: 'Work Sans' }}>
+                        Consider what types of health issues should be covered by your ideal policy, especially when it comes to potentially pricey problems. For example, if you want coverage for serious illnesses such as cancer, make sure you buy an accident and illness policy rather than an accident-only policy.
+                      </p>
+                      <p className="text-[#606f7f] text-base leading-[26px] font-normal tracking-[0]" style={{ fontFamily: 'Work Sans' }}>
+                        It's also a smart idea to look for coverage perks like a 24/7 pet telehealth line, coverage for vet exam fees and the option to add a wellness plan.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Consider the Waiting Periods */}
+                  <div className="w-full bg-[#f6f8fa] rounded-lg p-6 flex flex-col sm:flex-row gap-6">
+                    <div className="flex-shrink-0">
+                      <div className="w-16 h-16 bg-[#203468] rounded-lg flex items-center justify-center">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M20 10v10l6.667 3.333M36.667 20c0 9.205-7.462 16.667-16.667 16.667S3.333 29.205 3.333 20 10.795 3.333 20 3.333 36.667 10.795 36.667 20z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </div>
+                    </div>
+                    <div className="flex-1 flex flex-col gap-3">
+                      <h3 className="text-black text-xl font-bold leading-[26px]" style={{ fontFamily: 'Schnyder S' }}>
+                        Consider the Waiting Periods
+                      </h3>
+                      <p className="text-[#606f7f] text-base leading-[26px] font-normal tracking-[0]" style={{ fontFamily: 'Work Sans' }}>
+                        Pet insurance waiting periods are generally two to 14 days for accident coverage and 14 days for illness coverage. Some pet insurers have special waiting periods for orthopedic conditions (such as cruciate ligament issues) that can range from six to 12 months. You can find pet insurance with no special waiting periods, such as <a href="#" className="text-[#007AC8] underline hover:text-[#005a8a] transition-colors">ASPCA pet health insurance</a>.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Choose Reimbursement Levels */}
+                  <div className="w-full bg-[#f6f8fa] rounded-lg p-6 flex flex-col sm:flex-row gap-6">
+                    <div className="flex-shrink-0">
+                      <div className="w-16 h-16 bg-[#203468] rounded-lg flex items-center justify-center">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M20 36.667c9.205 0 16.667-7.462 16.667-16.667S29.205 3.333 20 3.333 3.333 10.795 3.333 20 10.795 36.667 20 36.667z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M20 13.333V20m0 6.667h.017" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </div>
+                    </div>
+                    <div className="flex-1 flex flex-col gap-3">
+                      <h3 className="text-black text-xl font-bold leading-[26px]" style={{ fontFamily: 'Schnyder S' }}>
+                        Choose Reimbursement Levels
+                      </h3>
+                      <p className="text-[#606f7f] text-base leading-[26px] font-normal tracking-[0]" style={{ fontFamily: 'Work Sans' }}>
+                        Your coverage levels will impact your pet insurance cost. If you want to pay less out of pocket, choose a lower deductible and a higher reimbursement amount, but it'll cost you more in premiums because your insurer will pay out more if you file a pet insurance claim.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Check Your Pet's Eligibility */}
+                  <div className="w-full bg-[#f6f8fa] rounded-lg p-6 flex flex-col sm:flex-row gap-6">
+                    <div className="flex-shrink-0">
+                      <div className="w-16 h-16 bg-[#203468] rounded-lg flex items-center justify-center">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M13.333 20L18.333 25l8.334-10m5 5c0 9.205-7.462 16.667-16.667 16.667S3.333 29.205 3.333 20 10.795 3.333 20 3.333 36.667 10.795 36.667 20z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </div>
+                    </div>
+                    <div className="flex-1 flex flex-col gap-3">
+                      <h3 className="text-black text-xl font-bold leading-[26px]" style={{ fontFamily: 'Schnyder S' }}>
+                        Check Your Pet's Eligibility
+                      </h3>
+                      <p className="text-[#606f7f] text-base leading-[26px] font-normal tracking-[0]" style={{ fontFamily: 'Work Sans' }}>
+                        Some pet insurers have age limits to buy a policy. Most insurers will insure puppies and kittens around the age of six to 10 weeks. But some insurers have upper age limits (such as age 14) to buy a policy. The <a href="#" className="text-[#007AC8] underline hover:text-[#005a8a] transition-colors">best pet insurance companies for older dogs</a> do not have upper age limits and have convenient coverage perks like a 24/7 pet telehealth line and the option to add a wellness plan.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Compare Quotes for Plans That Match Your Wish List */}
+                  <div className="w-full bg-[#f6f8fa] rounded-lg p-6 flex flex-col sm:flex-row gap-6">
+                    <div className="flex-shrink-0">
+                      <div className="w-16 h-16 bg-[#203468] rounded-lg flex items-center justify-center">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M33.333 5H6.667C5.747 5 5 5.746 5 6.667v26.666C5 34.254 5.747 35 6.667 35h26.666c.92 0 1.667-.746 1.667-1.667V6.667C35 5.746 34.253 5 33.333 5z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M25 5v30M11.667 13.333h6.666m-6.666 6.667h6.666m-6.666 6.667h6.666" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </div>
+                    </div>
+                    <div className="flex-1 flex flex-col gap-3">
+                      <h3 className="text-black text-xl font-bold leading-[26px]" style={{ fontFamily: 'Schnyder S' }}>
+                        Compare Quotes for Plans That Match Your Wish List
+                      </h3>
+                      <p className="text-[#606f7f] text-base leading-[26px] font-normal tracking-[0]" style={{ fontFamily: 'Work Sans' }}>
+                        The best way to find a policy within your budget is to <a href="#" className="text-[#007AC8] underline hover:text-[#005a8a] transition-colors">compare pet insurance quotes</a> from multiple insurers. Make sure to compare quotes for various levels of annual coverage. In some cases you can pay a little more per month for a lot more coverage. For example, unlimited annual coverage from Pets Best is only about $6 more per month than its $5,000 limit plan. This is a bargain compared to other pet insurers, where the monthly price difference can be more like $30 and up.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
               {/* Methodology and Evaluation Section */}
               <Suspense fallback={<div className="h-96 flex items-center justify-center">Loading...</div>}>
                 <Fold />
@@ -268,8 +404,6 @@ export const PetInsuranceComparison: React.FC<PetInsuranceComparisonProps> = ({ 
                     </p>
                   </div>
                 </div>
-                
-                <CTAButton onClick={onCTAClick} />
               </section>
             </div>
           </main>

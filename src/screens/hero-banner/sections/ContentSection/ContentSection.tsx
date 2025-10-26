@@ -13,9 +13,13 @@ import { Card, CardContent } from "../../../../components/ui/card";
 interface ContentSectionProps {
   onOpenChat?: () => void;
   quickDiveRef?: React.RefObject<HTMLDivElement>;
+  onShowTopPicks?: () => void;
+  onShowDiveIntoData?: () => void;
+  showTopPicks?: boolean;
+  showDiveIntoData?: boolean;
 }
 
-export const ContentSection = ({ onOpenChat, quickDiveRef }: ContentSectionProps): JSX.Element => {
+export const ContentSection = ({ onOpenChat, quickDiveRef, onShowTopPicks, onShowDiveIntoData, showTopPicks, showDiveIntoData }: ContentSectionProps): JSX.Element => {
   const [showAllAuthors, setShowAllAuthors] = useState(false);
   
   const breadcrumbItems = [
@@ -56,7 +60,8 @@ export const ContentSection = ({ onOpenChat, quickDiveRef }: ContentSectionProps
   ];
 
   return (
-    <section className="flex z-[1] w-full relative flex-col items-start gap-6 pt-[136px] overflow-hidden">
+    <section className={`flex z-[1] w-full relative flex-col items-start gap-6 overflow-hidden ${!showTopPicks && !showDiveIntoData ? 'pt-[136px]' : 'pt-0'}`}>
+      {!showTopPicks && !showDiveIntoData && (
       <div className="flex flex-col items-center px-0 pb-6 relative w-full bg-[linear-gradient(180deg,rgba(255,255,255,1)_0%,rgba(245,245,247,1)_100%)] overflow-hidden">
         <div className="w-full max-w-none sm:max-w-[1440px] min-w-0 mx-auto px-4 sm:px-6 md:px-8 lg:px-[90px] overflow-hidden">
           <div className="grid grid-cols-1 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 gap-3 sm:gap-5 w-full min-w-0">
@@ -294,7 +299,9 @@ export const ContentSection = ({ onOpenChat, quickDiveRef }: ContentSectionProps
           </div>
         </div>
       </div>
+      )}
 
+      {!showTopPicks && !showDiveIntoData && (
       <div ref={quickDiveRef} className="w-full pt-4 sm:pt-6 pb-6 sm:pb-8 border-b border-solid border-[#eceff3] overflow-hidden">
         <div className="w-full max-w-none sm:max-w-[1440px] min-w-0 mx-auto px-4 sm:px-6 md:px-8 lg:px-[90px]">
           <div className="grid grid-cols-1 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 gap-3 sm:gap-5 w-full min-w-0">
@@ -323,7 +330,10 @@ export const ContentSection = ({ onOpenChat, quickDiveRef }: ContentSectionProps
                 </div>
 
                 {/* Top Editor Picks Button */}
-                <div className="flex-1 min-h-[56px] py-2 px-4 bg-white rounded-xl border border-[#F4F5F8] shadow-[0px_4px_23px_-1px_rgba(0,0,0,0.05)] flex items-center justify-center gap-2.5 cursor-pointer hover:border-[#007AC8] transition-all">
+                <div 
+                  onClick={onShowTopPicks}
+                  className="flex-1 min-h-[56px] py-2 px-4 bg-white rounded-xl border border-[#F4F5F8] shadow-[0px_4px_23px_-1px_rgba(0,0,0,0.05)] flex items-center justify-center gap-2.5 cursor-pointer hover:border-[#007AC8] transition-all"
+                >
                   <img src="/EditorPick.svg" alt="Editor Pick" className="w-6 h-6 flex-shrink-0" />
                   <div className="text-[#606F7F] text-sm leading-6" style={{ fontFamily: 'Work Sans', fontWeight: '600' }}>
                     Top Editor Picks
@@ -336,7 +346,10 @@ export const ContentSection = ({ onOpenChat, quickDiveRef }: ContentSectionProps
                 </div>
 
                 {/* Dive into the data Button */}
-                <div className="flex-1 min-h-[56px] py-2 px-4 bg-white rounded-xl border border-[#F4F5F8] shadow-[0px_4px_23px_-1px_rgba(0,0,0,0.05)] flex items-center justify-center gap-2.5 cursor-pointer hover:border-[#007AC8] transition-all">
+                <div
+                  onClick={onShowDiveIntoData}
+                  className="flex-1 min-h-[56px] py-2 px-4 bg-white rounded-xl border border-[#F4F5F8] shadow-[0px_4px_23px_-1px_rgba(0,0,0,0.05)] flex items-center justify-center gap-2.5 cursor-pointer hover:border-[#007AC8] transition-all"
+                >
                   <img src="/bar-chart-04.svg" alt="Data" className="w-6 h-6 flex-shrink-0" />
                   <div className="text-[#606F7F] text-sm leading-6" style={{ fontFamily: 'Work Sans', fontWeight: '600' }}>
                     Dive into the data
@@ -352,6 +365,7 @@ export const ContentSection = ({ onOpenChat, quickDiveRef }: ContentSectionProps
           </div>
         </div>
       </div>
+      )}
     </section>
   );
 };
