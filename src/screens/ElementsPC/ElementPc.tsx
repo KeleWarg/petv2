@@ -8,6 +8,7 @@ import { DetailedInfoSection } from "./sections/DetailedInfoSection/DetailedInfo
 export const ElementPc = (): JSX.Element => {
   const [activeIndex, setActiveIndex] = useState(0);
   const navRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const isInitialMount = useRef(true);
 
   const navigationItems = [
     { title: "Compare Plans", id: "compare-plans" },
@@ -77,6 +78,12 @@ export const ElementPc = (): JSX.Element => {
 
   // Auto-scroll navigation to keep active item visible
   useEffect(() => {
+    // Skip on initial mount to prevent page jump
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+    
     if (navRefs.current[activeIndex]) {
       navRefs.current[activeIndex]?.scrollIntoView({
         behavior: 'smooth',
