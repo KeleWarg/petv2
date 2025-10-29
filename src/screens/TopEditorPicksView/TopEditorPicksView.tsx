@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { TableCell } from '../../components/common';
+import { COST_DATA } from '../../data/insurance-providers';
 
 interface TopEditorPicksViewProps {
   onBack: () => void;
@@ -56,7 +58,7 @@ export const TopEditorPicksView: React.FC<TopEditorPicksViewProps> = ({ onBack }
 
         {/* Main Content */}
         <div className="w-full flex flex-col items-center gap-10">
-          <div className="w-full max-w-[1020px] px-4 sm:px-6 md:px-8">
+          <div className="w-full max-w-[1080px] px-4 sm:px-6 md:px-8">
             <div style={{width: '100%', height: '100%', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 40, display: 'inline-flex'}}>
               <div style={{alignSelf: 'stretch', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 24, display: 'flex'}}>
                 <div style={{alignSelf: 'stretch', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 24, display: 'flex'}}>
@@ -86,7 +88,7 @@ export const TopEditorPicksView: React.FC<TopEditorPicksViewProps> = ({ onBack }
               <div style={{width: '100%', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 24, display: 'flex'}}>
                 {/* Title above carousel */}
                 <div className="text-[20px] xs:text-[24px] sm:text-[28px] md:text-[32px] lg:text-[36px] xl:text-[40px] leading-[26px] xs:leading-[30px] sm:leading-[34px] md:leading-[39px] lg:leading-[44px] xl:leading-[48px]" style={{alignSelf: 'stretch', justifyContent: 'center', display: 'flex', flexDirection: 'column', color: 'black', fontFamily: 'Schnyder S', fontWeight: '700'}}>Here Are The Picks By Our Editors</div>
-                <div style={{alignSelf: 'stretch', justifyContent: 'center', alignItems: 'stretch', gap: 24, display: 'flex', flexWrap: 'nowrap'}}>
+                <div className="w-full overflow-x-auto [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" style={{alignSelf: 'stretch', justifyContent: 'flex-start', alignItems: 'stretch', gap: 24, display: 'flex', flexWrap: 'nowrap'}}>
                   {/* Pets Best Card */}
                   <div 
                     className="insurance-plan-card transition-all duration-300 ease-in-out md:hover:scale-105 md:hover:shadow-lg md:hover:border md:hover:border-[#007AC8] cursor-pointer"
@@ -98,7 +100,8 @@ export const TopEditorPicksView: React.FC<TopEditorPicksViewProps> = ({ onBack }
                       borderRadius: '24px',
                       display: 'flex',
                       flexDirection: 'column',
-                      flex: '1 1 312px',
+                      flex: '0 0 312px',
+                      minWidth: '312px',
                       maxWidth: '312px',
                       minHeight: '480px'
                     }}
@@ -166,7 +169,8 @@ export const TopEditorPicksView: React.FC<TopEditorPicksViewProps> = ({ onBack }
                       borderRadius: '24px',
                       display: 'flex',
                       flexDirection: 'column',
-                      flex: '1 1 312px',
+                      flex: '0 0 312px',
+                      minWidth: '312px',
                       maxWidth: '312px',
                       minHeight: '480px'
                     }}
@@ -234,7 +238,8 @@ export const TopEditorPicksView: React.FC<TopEditorPicksViewProps> = ({ onBack }
                       borderRadius: '24px',
                       display: 'flex',
                       flexDirection: 'column',
-                      flex: '1 1 312px',
+                      flex: '0 0 312px',
+                      minWidth: '312px',
                       maxWidth: '312px',
                       minHeight: '480px'
                     }}
@@ -332,83 +337,36 @@ export const TopEditorPicksView: React.FC<TopEditorPicksViewProps> = ({ onBack }
                       </div>
                     </div>
                   </div>
-                  <div className="w-full overflow-x-auto [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full" style={{flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'flex'}}>
-                    <div style={{minWidth: '1016px', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex'}}>
-                      <div style={{width: 254, minWidth: 200, height: 72, paddingTop: 13, paddingBottom: 15, paddingLeft: 9, paddingRight: 9, background: '#ECF1FF', borderTopLeftRadius: 8, outline: '1px #CED4DB solid', outlineOffset: '-0.50px', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex'}}>
-                        <div style={{justifyContent: 'center', display: 'flex', flexDirection: 'column', color: '#6A6A6A', fontSize: 14, fontFamily: 'Work Sans', fontWeight: '600', lineHeight: '22px', wordWrap: 'break-word'}}>Provider</div>
-                      </div>
-                      <div style={{width: 305, minWidth: 200, height: 72, paddingTop: 13, paddingBottom: 15, paddingLeft: 9, paddingRight: 9, background: '#ECF1FF', outline: '1px #CED4DB solid', outlineOffset: '-0.50px', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex'}}>
-                        <div style={{justifyContent: 'center', display: 'flex', flexDirection: 'column', color: '#6A6A6A', fontSize: 14, fontFamily: 'Work Sans', fontWeight: '600', lineHeight: '22px', wordWrap: 'break-word'}}>Editor's Take</div>
-                      </div>
-                      <div style={{width: 288, minWidth: 200, paddingTop: 13, paddingBottom: 15, paddingLeft: 9, paddingRight: 9, background: '#ECF1FF', outline: '1px #CED4DB solid', outlineOffset: '-0.50px', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex'}}>
-                        <div style={{width: 288, justifyContent: 'center', display: 'flex', flexDirection: 'column', color: '#6A6A6A', fontSize: 14, fontFamily: 'Work Sans', fontWeight: '600', lineHeight: '22px', wordWrap: 'break-word'}}>Customer Satisfied With Customer Service and Pricing</div>
-                      </div>
-                      <div style={{width: 169, minWidth: 150, height: 72, paddingTop: 13, paddingBottom: 15, paddingLeft: 9, paddingRight: 9, background: '#ECF1FF', borderTopRightRadius: 16, outline: '1px #CED4DB solid', outlineOffset: '-0.50px', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex'}}>
-                        <div style={{justifyContent: 'center', display: 'flex', flexDirection: 'column', color: '#6A6A6A', fontSize: 14, fontFamily: 'Work Sans', fontWeight: '600', lineHeight: '22px', wordWrap: 'break-word'}}>Learn More</div>
-                      </div>
-                    </div>
-                    <div style={{minWidth: '1016px', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'flex'}}>
-                      {/* Pets Best Row */}
-                      <div style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start', display: 'inline-flex'}}>
-                        <div style={{width: 255, minWidth: 200, height: 68, paddingTop: 13, paddingBottom: 15, paddingLeft: 9, paddingRight: 9, background: 'white', outline: '1px #CED4DB solid', outlineOffset: '-0.50px', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', display: 'inline-flex'}}>
-                          <div style={{justifyContent: 'flex-start', alignItems: 'center', gap: 24, display: 'inline-flex'}}>
-                            <img style={{width: 69, height: 16}} src="/pets-best-logo.svg" alt="Pets Best" />
-                            <div style={{justifyContent: 'center', display: 'flex', flexDirection: 'column', color: '#007AC8', fontSize: 14, fontFamily: 'Work Sans', fontWeight: '600', lineHeight: '22px', wordWrap: 'break-word'}}>Pets Best</div>
-                          </div>
-                        </div>
-                        <div style={{width: 305, minWidth: 200, height: 68, paddingTop: 13, paddingBottom: 15, paddingLeft: 9, paddingRight: 9, background: 'white', outline: '1px #CED4DB solid', outlineOffset: '-0.50px', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', display: 'inline-flex'}}>
-                          <div style={{justifyContent: 'center', display: 'flex', flexDirection: 'column', color: '#007AC8', fontSize: 14, fontFamily: 'Work Sans', fontWeight: '600', lineHeight: '22px', wordWrap: 'break-word'}}>Best overall</div>
-                        </div>
-                        <div style={{width: 288, minWidth: 200, height: 68, paddingTop: 13, paddingBottom: 15, paddingLeft: 9, paddingRight: 9, background: 'white', outline: '1px #CED4DB solid', outlineOffset: '-0.50px', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', display: 'inline-flex'}}>
-                          <div style={{justifyContent: 'center', display: 'flex', flexDirection: 'column', color: '#6A6A6A', fontSize: 14, fontFamily: 'Work Sans', fontWeight: '400', lineHeight: '22px', wordWrap: 'break-word'}}>83%</div>
-                        </div>
-                        <div style={{width: 169, minWidth: 150, height: 68, paddingTop: 13, paddingBottom: 15, paddingLeft: 9, paddingRight: 9, background: 'white', outline: '1px #CED4DB solid', outlineOffset: '-0.50px', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', display: 'inline-flex'}}>
-                          <div style={{minWidth: 60, paddingLeft: 16, paddingRight: 16, paddingTop: 9, paddingBottom: 9, background: '#007AC8', borderRadius: 8, justifyContent: 'center', alignItems: 'center', display: 'inline-flex', cursor: 'pointer'}}>
-                            <div style={{textAlign: 'center', justifyContent: 'center', display: 'flex', flexDirection: 'column', color: 'white', fontSize: 18, fontFamily: 'Work Sans', fontWeight: '600', lineHeight: '30px', wordWrap: 'break-word'}}>Learn More</div>
-                          </div>
-                        </div>
-                      </div>
-                      {/* Embrace Row */}
-                      <div style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start', display: 'inline-flex'}}>
-                        <div style={{width: 255, minWidth: 200, height: 68, paddingTop: 13, paddingBottom: 15, paddingLeft: 9, paddingRight: 9, background: '#FAFBFF', outline: '1px #CED4DB solid', outlineOffset: '-0.50px', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', display: 'inline-flex'}}>
-                          <div style={{justifyContent: 'flex-start', alignItems: 'center', gap: 24, display: 'inline-flex'}}>
-                            <img style={{width: 69, height: 16}} src="/Embracelogo.png" alt="Embrace" />
-                            <div style={{justifyContent: 'center', display: 'flex', flexDirection: 'column', color: '#007AC8', fontSize: 14, fontFamily: 'Work Sans', fontWeight: '600', lineHeight: '22px', wordWrap: 'break-word'}}>Embrace</div>
-                          </div>
-                        </div>
-                        <div style={{width: 305, minWidth: 200, height: 68, paddingTop: 13, paddingBottom: 15, paddingLeft: 9, paddingRight: 9, background: '#FAFBFF', outline: '1px #CED4DB solid', outlineOffset: '-0.50px', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', display: 'inline-flex'}}>
-                          <div style={{justifyContent: 'center', display: 'flex', flexDirection: 'column', color: '#007AC8', fontSize: 14, fontFamily: 'Work Sans', fontWeight: '600', lineHeight: '22px', wordWrap: 'break-word'}}>Best for multi-pet</div>
-                        </div>
-                        <div style={{width: 288, minWidth: 200, height: 68, paddingTop: 13, paddingBottom: 15, paddingLeft: 9, paddingRight: 9, background: '#FAFBFF', outline: '1px #CED4DB solid', outlineOffset: '-0.50px', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', display: 'inline-flex'}}>
-                          <div style={{justifyContent: 'center', display: 'flex', flexDirection: 'column', color: '#6A6A6A', fontSize: 14, fontFamily: 'Work Sans', fontWeight: '400', lineHeight: '22px', wordWrap: 'break-word'}}>83%</div>
-                        </div>
-                        <div style={{width: 169, minWidth: 150, height: 68, paddingTop: 13, paddingBottom: 15, paddingLeft: 9, paddingRight: 9, background: '#FAFBFF', outline: '1px #CED4DB solid', outlineOffset: '-0.50px', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', display: 'inline-flex'}}>
-                          <div style={{minWidth: 60, paddingLeft: 16, paddingRight: 16, paddingTop: 9, paddingBottom: 9, background: '#007AC8', borderRadius: 8, justifyContent: 'center', alignItems: 'center', display: 'inline-flex', cursor: 'pointer'}}>
-                            <div style={{textAlign: 'center', justifyContent: 'center', display: 'flex', flexDirection: 'column', color: 'white', fontSize: 18, fontFamily: 'Work Sans', fontWeight: '600', lineHeight: '30px', wordWrap: 'break-word'}}>Learn More</div>
-                          </div>
-                        </div>
-                      </div>
-                      {/* Spot Row */}
-                      <div style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start', display: 'inline-flex'}}>
-                        <div style={{width: 255, minWidth: 200, height: 68, paddingTop: 13, paddingBottom: 15, paddingLeft: 9, paddingRight: 9, background: 'white', outline: '1px #CED4DB solid', outlineOffset: '-0.50px', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', display: 'inline-flex'}}>
-                          <div style={{justifyContent: 'flex-start', alignItems: 'center', gap: 24, display: 'inline-flex'}}>
-                            <img style={{width: 69, height: 16}} src="/Spotlogo.png" alt="Spot" />
-                            <div style={{justifyContent: 'center', display: 'flex', flexDirection: 'column', color: '#007AC8', fontSize: 14, fontFamily: 'Work Sans', fontWeight: '600', lineHeight: '22px', wordWrap: 'break-word'}}>Spot</div>
-                          </div>
-                        </div>
-                        <div style={{width: 305, minWidth: 200, height: 68, paddingTop: 13, paddingBottom: 15, paddingLeft: 9, paddingRight: 9, background: 'white', outline: '1px #CED4DB solid', outlineOffset: '-0.50px', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', display: 'inline-flex'}}>
-                          <div style={{justifyContent: 'center', display: 'flex', flexDirection: 'column', color: '#007AC8', fontSize: 14, fontFamily: 'Work Sans', fontWeight: '600', lineHeight: '22px', wordWrap: 'break-word'}}>Best for healthy pets</div>
-                        </div>
-                        <div style={{width: 288, minWidth: 200, height: 68, paddingTop: 13, paddingBottom: 15, paddingLeft: 9, paddingRight: 9, background: 'white', outline: '1px #CED4DB solid', outlineOffset: '-0.50px', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', display: 'inline-flex'}}>
-                          <div style={{justifyContent: 'center', display: 'flex', flexDirection: 'column', color: '#6A6A6A', fontSize: 14, fontFamily: 'Work Sans', fontWeight: '400', lineHeight: '22px', wordWrap: 'break-word'}}>83%</div>
-                        </div>
-                        <div style={{width: 169, minWidth: 150, height: 68, paddingTop: 13, paddingBottom: 15, paddingLeft: 9, paddingRight: 9, background: 'white', outline: '1px #CED4DB solid', outlineOffset: '-0.50px', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', display: 'inline-flex'}}>
-                          <div style={{minWidth: 60, paddingLeft: 16, paddingRight: 16, paddingTop: 9, paddingBottom: 9, background: '#007AC8', borderRadius: 8, justifyContent: 'center', alignItems: 'center', display: 'inline-flex', cursor: 'pointer'}}>
-                            <div style={{textAlign: 'center', justifyContent: 'center', display: 'flex', flexDirection: 'column', color: 'white', fontSize: 18, fontFamily: 'Work Sans', fontWeight: '600', lineHeight: '30px', wordWrap: 'break-word'}}>Learn More</div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                  <div className="w-full overflow-x-auto">
+                    <table className="w-full table-fixed border-separate border-spacing-0 min-w-[800px]">
+                      <thead>
+                        <tr>
+                          <TableCell isHeader className="w-[25%] rounded-tl-[8px]">Provider</TableCell>
+                          <TableCell isHeader className="w-[30%]">Average Monthly for Dogs</TableCell>
+                          <TableCell isHeader className="w-[30%]">Average Monthly for Cats</TableCell>
+                          <TableCell isHeader className="w-[15%] rounded-tr-[16px]">Apply Now</TableCell>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {COST_DATA.map((row, index) => (
+                          <tr key={row.provider}>
+                            <TableCell isProvider>{row.provider}</TableCell>
+                            <TableCell>{row.dogCost}</TableCell>
+                            <TableCell>{row.catCost}</TableCell>
+                            <TableCell>
+                              <a 
+                                href={row.applyNowUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="font-semibold text-[#007ac8] underline hover:text-[#005a8a] transition-colors duration-200"
+                              >
+                                Apply Now
+                              </a>
+                            </TableCell>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                 </div>
                 </div>
               </div>
