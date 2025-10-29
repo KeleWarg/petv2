@@ -62,7 +62,7 @@ export const TopEditorPicksView: React.FC<TopEditorPicksViewProps> = ({ onBack }
                 <div style={{alignSelf: 'stretch', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 24, display: 'flex'}}>
                   <div style={{alignSelf: 'stretch', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 24, display: 'flex'}}>
                     <div style={{alignSelf: 'stretch', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 8, display: 'flex'}}>
-                      <div style={{alignSelf: 'stretch', height: 48, justifyContent: 'center', display: 'flex', flexDirection: 'column', color: 'black', fontSize: 40, fontFamily: 'Schnyder S', fontWeight: '700', lineHeight: '48px', wordWrap: 'break-word'}}>Editorial Picks: Best Pet Insurance Companies</div>
+                      <div className="text-[20px] xs:text-[24px] sm:text-[28px] md:text-[32px] lg:text-[36px] xl:text-[40px] leading-[26px] xs:leading-[30px] sm:leading-[34px] md:leading-[39px] lg:leading-[44px] xl:leading-[48px]" style={{alignSelf: 'stretch', justifyContent: 'center', display: 'flex', flexDirection: 'column', color: 'black', fontFamily: 'Schnyder S', fontWeight: '700'}}>Editorial Picks: Best Pet Insurance Companies</div>
                       <div style={{alignSelf: 'stretch', color: '#333333', fontSize: 18, fontFamily: 'Georgia', fontWeight: '400', lineHeight: '29.12px', wordWrap: 'break-word'}}>Our team reviewed more than 900,000 pet insurance rates and surveyed 2,600 pet parents across 300 breeds to identify the best-performing providers for 2025. These companies stand out for consistency across coverage, customer satisfaction, and claims experience.<br/>Use the tabs below to compare monthly costs, waiting periods, and plan details side-by-side.</div>
                     </div>
                   </div>
@@ -80,8 +80,12 @@ export const TopEditorPicksView: React.FC<TopEditorPicksViewProps> = ({ onBack }
                   </div>
                 </div>
               </div>
+              {/* Separator between intro and cards */}
+              <div style={{width: '100%', height: '1px', background: '#CED4DB', marginTop: '40px', marginBottom: '40px'}}></div>
               {/* Cards Section */}
-              <div style={{width: '100%', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 24, display: 'flex', marginTop: '40px'}}>
+              <div style={{width: '100%', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 24, display: 'flex'}}>
+                {/* Title above carousel */}
+                <div className="text-[20px] xs:text-[24px] sm:text-[28px] md:text-[32px] lg:text-[36px] xl:text-[40px] leading-[26px] xs:leading-[30px] sm:leading-[34px] md:leading-[39px] lg:leading-[44px] xl:leading-[48px]" style={{alignSelf: 'stretch', justifyContent: 'center', display: 'flex', flexDirection: 'column', color: 'black', fontFamily: 'Schnyder S', fontWeight: '700'}}>Here Are The Picks By Our Editors</div>
                 <div style={{alignSelf: 'stretch', justifyContent: 'center', alignItems: 'stretch', gap: 24, display: 'flex', flexWrap: 'nowrap'}}>
                   {/* Pets Best Card */}
                   <div 
@@ -294,7 +298,7 @@ export const TopEditorPicksView: React.FC<TopEditorPicksViewProps> = ({ onBack }
               <div style={{alignSelf: 'stretch', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 40, display: 'flex'}}>
                 {/* Title and Description */}
                 <div style={{width: '100%', maxWidth: 755, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 8, display: 'flex'}}>
-                  <div style={{alignSelf: 'stretch', height: 48, justifyContent: 'center', display: 'flex', flexDirection: 'column', color: 'black', fontSize: 40, fontFamily: 'Schnyder S', fontWeight: '700', lineHeight: '48px', wordWrap: 'break-word'}}>Here are our top 3 picks</div>
+                  <div className="text-[20px] xs:text-[24px] sm:text-[28px] md:text-[32px] lg:text-[36px] xl:text-[40px] leading-[26px] xs:leading-[30px] sm:leading-[34px] md:leading-[39px] lg:leading-[44px] xl:leading-[48px]" style={{alignSelf: 'stretch', justifyContent: 'center', display: 'flex', flexDirection: 'column', color: 'black', fontFamily: 'Schnyder S', fontWeight: '700'}}>Summary of the Best Pet Insurance Companies</div>
                   <div style={{alignSelf: 'stretch', justifyContent: 'center', display: 'flex', flexDirection: 'column', color: '#606F7F', fontSize: 16, fontFamily: 'Work Sans', fontWeight: '400', lineHeight: '26px', wordWrap: 'break-word'}}>Understanding what each provider is best at is essential in choosing the best plan for your pet.</div>
                 </div>
                 <div style={{alignSelf: 'stretch', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 24, display: 'flex'}}>
@@ -328,8 +332,8 @@ export const TopEditorPicksView: React.FC<TopEditorPicksViewProps> = ({ onBack }
                       </div>
                     </div>
                   </div>
-                  <div style={{alignSelf: 'stretch', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-end', display: 'flex', overflowX: 'auto'}}>
-                    <div style={{alignSelf: 'stretch', justifyContent: 'center', alignItems: 'flex-start', display: 'inline-flex'}}>
+                  <div className="w-full overflow-x-auto [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full" style={{flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'flex'}}>
+                    <div style={{minWidth: '1016px', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex'}}>
                       <div style={{width: 254, minWidth: 200, height: 72, paddingTop: 13, paddingBottom: 15, paddingLeft: 9, paddingRight: 9, background: '#ECF1FF', borderTopLeftRadius: 8, outline: '1px #CED4DB solid', outlineOffset: '-0.50px', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex'}}>
                         <div style={{justifyContent: 'center', display: 'flex', flexDirection: 'column', color: '#6A6A6A', fontSize: 14, fontFamily: 'Work Sans', fontWeight: '600', lineHeight: '22px', wordWrap: 'break-word'}}>Provider</div>
                       </div>
@@ -343,9 +347,9 @@ export const TopEditorPicksView: React.FC<TopEditorPicksViewProps> = ({ onBack }
                         <div style={{justifyContent: 'center', display: 'flex', flexDirection: 'column', color: '#6A6A6A', fontSize: 14, fontFamily: 'Work Sans', fontWeight: '600', lineHeight: '22px', wordWrap: 'break-word'}}>Learn More</div>
                       </div>
                     </div>
-                    <div style={{alignSelf: 'stretch', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'flex'}}>
+                    <div style={{minWidth: '1016px', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'flex'}}>
                       {/* Pets Best Row */}
-                      <div style={{alignSelf: 'stretch', justifyContent: 'center', alignItems: 'flex-start', display: 'inline-flex'}}>
+                      <div style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start', display: 'inline-flex'}}>
                         <div style={{width: 255, minWidth: 200, height: 68, paddingTop: 13, paddingBottom: 15, paddingLeft: 9, paddingRight: 9, background: 'white', outline: '1px #CED4DB solid', outlineOffset: '-0.50px', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', display: 'inline-flex'}}>
                           <div style={{justifyContent: 'flex-start', alignItems: 'center', gap: 24, display: 'inline-flex'}}>
                             <img style={{width: 69, height: 16}} src="/pets-best-logo.svg" alt="Pets Best" />
@@ -365,7 +369,7 @@ export const TopEditorPicksView: React.FC<TopEditorPicksViewProps> = ({ onBack }
                         </div>
                       </div>
                       {/* Embrace Row */}
-                      <div style={{alignSelf: 'stretch', justifyContent: 'center', alignItems: 'flex-start', display: 'inline-flex'}}>
+                      <div style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start', display: 'inline-flex'}}>
                         <div style={{width: 255, minWidth: 200, height: 68, paddingTop: 13, paddingBottom: 15, paddingLeft: 9, paddingRight: 9, background: '#FAFBFF', outline: '1px #CED4DB solid', outlineOffset: '-0.50px', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', display: 'inline-flex'}}>
                           <div style={{justifyContent: 'flex-start', alignItems: 'center', gap: 24, display: 'inline-flex'}}>
                             <img style={{width: 69, height: 16}} src="/Embracelogo.png" alt="Embrace" />
@@ -385,7 +389,7 @@ export const TopEditorPicksView: React.FC<TopEditorPicksViewProps> = ({ onBack }
                         </div>
                       </div>
                       {/* Spot Row */}
-                      <div style={{alignSelf: 'stretch', justifyContent: 'center', alignItems: 'flex-start', display: 'inline-flex'}}>
+                      <div style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start', display: 'inline-flex'}}>
                         <div style={{width: 255, minWidth: 200, height: 68, paddingTop: 13, paddingBottom: 15, paddingLeft: 9, paddingRight: 9, background: 'white', outline: '1px #CED4DB solid', outlineOffset: '-0.50px', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', display: 'inline-flex'}}>
                           <div style={{justifyContent: 'flex-start', alignItems: 'center', gap: 24, display: 'inline-flex'}}>
                             <img style={{width: 69, height: 16}} src="/Spotlogo.png" alt="Spot" />
