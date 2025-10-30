@@ -10,6 +10,7 @@ import {
 } from '../data/insurance-providers';
 
 interface Message {
+  id: string;
   type: 'bot' | 'user' | 'table';
   text: string;
   options?: ConversationQuestion;
@@ -17,6 +18,7 @@ interface Message {
   isTyping?: boolean;
   tableData?: any;
   showOptions?: boolean;
+  onComplete?: () => void;
 }
 
 interface ConversationQuestion {
@@ -131,7 +133,10 @@ export const ChatOverlay: React.FC<ChatOverlayProps> = ({
           "Hi! 👋 I'll help you find the perfect pet insurance provider. Let's get started!", 
           undefined, 
           true, 
-          () => askNextQuestion()
+          () => {
+            // Wait briefly before asking first question
+            setTimeout(() => askNextQuestion(), 600);
+          }
         );
       }, 300);
     }
@@ -145,6 +150,20 @@ export const ChatOverlay: React.FC<ChatOverlayProps> = ({
   }) => {
     const [displayedText, setDisplayedText] = useState('');
     const [currentIndex, setCurrentIndex] = useState(0);
+    const completedRef = useRef(false);
+    const onCompleteRef = useRef(onComplete);
+
+    // Update ref when onComplete changes
+    useEffect(() => {
+      onCompleteRef.current = onComplete;
+    }, [onComplete]);
+
+    // Reset when text changes
+    useEffect(() => {
+      setDisplayedText('');
+      setCurrentIndex(0);
+      completedRef.current = false;
+    }, [text]);
 
     useEffect(() => {
       if (currentIndex < text.length) {
@@ -153,10 +172,13 @@ export const ChatOverlay: React.FC<ChatOverlayProps> = ({
           setCurrentIndex(prev => prev + 1);
         }, speed);
         return () => clearTimeout(timer);
-      } else if (onComplete) {
-        onComplete();
+      } else if (currentIndex === text.length && !completedRef.current) {
+        completedRef.current = true;
+        if (onCompleteRef.current) {
+          onCompleteRef.current();
+        }
       }
-    }, [currentIndex, text, speed, onComplete]);
+    }, [currentIndex, text, speed]); // Remove onComplete from deps
 
     return <span>{displayedText}</span>;
   };
@@ -165,75 +187,81 @@ export const ChatOverlay: React.FC<ChatOverlayProps> = ({
     return text.length * 20 + 500; // 20ms per character + 500ms buffer
   };
 
-  const addBotMessage = (text: string, options?: ConversationQuestion, withTyping: boolean = true) => {
+  const addBotMessage = (text: string, options?: ConversationQuestion, withTyping: boolean = true, onComplete?: () => void) => {
     const messageId = `bot-${Date.now()}-${Math.random()}`;
     
     if (withTyping) {
       setIsTypingActive(true);
       // Add message with typing state
       setMessages(prev => [...prev, {
+        id: messageId,
         type: 'bot',
         text,
         options,
         timestamp: new Date(),
         isTyping: true,
-        showOptions: false
+        showOptions: false,
+        onComplete // Store callback in message
       }]);
       setTypingMessageId(messageId);
     } else {
-      // Add message immediately without typing
+      // Add message immediately without typing, with options shown
       setMessages(prev => [...prev, {
+        id: messageId,
         type: 'bot',
         text,
         options,
         timestamp: new Date(),
         isTyping: false,
-        showOptions: false
+        showOptions: true // Show options immediately when not typing
       }]);
       
-      // If there are options, show them after a delay
-      if (options) {
-        setTimeout(() => {
-          setMessages(prev => prev.map((msg, idx) => 
-            idx === prev.length - 1 ? { ...msg, showOptions: true } : msg
-          ));
-        }, 800);
+      // Call callback immediately for non-typing messages
+      if (onComplete) {
+        setTimeout(onComplete, 300);
       }
     }
   };
 
   const addBotMessageWithDelay = (text: string, options?: ConversationQuestion, withTyping: boolean = true, callback?: () => void) => {
-    addBotMessage(text, options, withTyping);
-    
-    if (withTyping && callback) {
-      const delay = calculateTypingDelay(text);
-      setTimeout(callback, delay);
-    } else if (!withTyping && callback) {
-      setTimeout(callback, 500);
-    }
+    addBotMessage(text, options, withTyping, callback);
   };
 
-  const handleTypingComplete = (messageIndex: number) => {
-    setMessages(prev => prev.map((msg, idx) => 
-      idx === messageIndex ? { ...msg, isTyping: false } : msg
-    ));
+  const handleTypingComplete = (messageId: string) => {
     setTypingMessageId(null);
     setIsTypingActive(false);
     
-    // Add a small delay before showing options to let user read the message
-    const message = messages[messageIndex];
-    if (message && message.options) {
-      setTimeout(() => {
-        setMessages(prev => prev.map((msg, idx) => 
-          idx === messageIndex ? { ...msg, showOptions: true } : msg
-        ));
-      }, 800); // 800ms delay before showing options
-    }
+    // Get the callback from the current state and update message in one go
+    setMessages(prev => {
+      const messageIndex = prev.findIndex(m => m.id === messageId);
+      if (messageIndex === -1) {
+        return prev;
+      }
+      
+      const message = prev[messageIndex];
+      const callback = message?.onComplete;
+      
+      // Update the message to mark typing as complete and show options immediately
+      const updatedMessages = prev.map((msg) => 
+        msg.id === messageId ? { ...msg, isTyping: false, showOptions: true, onComplete: undefined } : msg
+      );
+      
+      // Call the callback after typing completes (with a small delay for options to show)
+      if (callback) {
+        setTimeout(() => {
+          callback();
+        }, 400);
+      }
+      
+      return updatedMessages;
+    });
   };
 
 
   const addUserMessage = (text: string) => {
+    const messageId = `user-${Date.now()}-${Math.random()}`;
     setMessages(prev => [...prev, {
+      id: messageId,
       type: 'user',
       text,
       timestamp: new Date()
@@ -241,7 +269,9 @@ export const ChatOverlay: React.FC<ChatOverlayProps> = ({
   };
 
   const addTableMessage = (recommendations: any[]) => {
+    const messageId = `table-${Date.now()}-${Math.random()}`;
     setMessages(prev => [...prev, {
+      id: messageId,
       type: 'table',
       text: '',
       timestamp: new Date(),
@@ -281,39 +311,39 @@ export const ChatOverlay: React.FC<ChatOverlayProps> = ({
     switch (field) {
       case 'petType':
         if (lowerOption.includes('dog')) {
-          return "Great choice! Dogs are wonderful companions. In our analysis, dog owners typically spend 15-20% more on pet insurance due to higher injury rates from their active lifestyles. This makes choosing the right coverage even more important. Let me ask about your budget.";
+          return "Great choice! Dogs are wonderful companions. In our analysis, dog owners typically spend 15-20% more on pet insurance due to higher injury rates from their active lifestyles. This makes choosing the right coverage even more important.";
         }
         if (lowerOption.includes('cat')) {
-          return "Perfect! Cats make amazing pets. While cats generally have lower premium costs, they're prone to specific conditions like kidney disease and dental issues as they age. Indoor cats especially benefit from comprehensive coverage. Now, let's talk about your budget.";
+          return "Perfect! Cats make amazing pets. While cats generally have lower premium costs, they're prone to specific conditions like kidney disease and dental issues as they age. Indoor cats especially benefit from comprehensive coverage.";
         }
         if (lowerOption.includes('both')) {
-          return "Awesome! Multiple pets can be such a joy. We recommend looking for multi-pet discounts, which can save you 5-10% per additional pet. Many families find the savings significant when covering 2+ animals. Let's discuss your budget.";
+          return "Awesome! Multiple pets can be such a joy. We recommend looking for multi-pet discounts, which can save you 5-10% per additional pet. Many families find the savings significant when covering 2+ animals.";
         }
-        return "Got it! Our data shows that regardless of pet type, early enrollment (before age 2) typically results in 25-30% lower lifetime premiums. Let me ask about your budget next.";
+        return "Got it! Our data shows that regardless of pet type, early enrollment (before age 2) typically results in 25-30% lower lifetime premiums.";
       
       case 'budget':
         if (lowerOption.includes('under') || lowerOption.includes('$50')) {
-          return "Understood! Budget-friendly options are important. We often recommend that pet owners budget 1-3% of their income for pet insurance. At this price point, accident-only plans can provide essential protection against major emergencies like broken bones or ingested objects. What's your main priority?";
+          return "Understood! Budget-friendly options are important. We often recommend that pet owners budget 1-3% of their income for pet insurance. At this price point, accident-only plans can provide essential protection against major emergencies like broken bones or ingested objects.";
         }
         if (lowerOption.includes('$50-$100')) {
-          return "Perfect! That's a solid mid-range budget. Our analysis shows this range typically covers comprehensive accident + illness plans with 80% reimbursement rates. This is often the 'sweet spot' where you get excellent value without overpaying. What matters most to you?";
+          return "Perfect! That's a solid mid-range budget. Our analysis shows this range typically covers comprehensive accident + illness plans with 80% reimbursement rates. This is often the 'sweet spot' where you get excellent value without overpaying.";
         }
         if (lowerOption.includes('over') || lowerOption.includes('$100')) {
-          return "Great! With that budget, you'll have excellent options. This range is ideal for pet parents who want premium features like wellness coverage, higher reimbursement rates (90%+), and lower deductibles. You can afford the top-tier plans from leading providers. What's your priority?";
+          return "Great! With that budget, you'll have excellent options. This range is ideal for pet parents who want premium features like wellness coverage, higher reimbursement rates (90%+), and lower deductibles. You can afford the top-tier plans from leading providers.";
         }
-        return "Thanks! Monthly premiums vary significantly by region, breed, and age. The key is finding coverage that fits your financial comfort zone while protecting against major expenses. Now, what's most important to you in a plan?";
+        return "Thanks! Monthly premiums vary significantly by region, breed, and age. The key is finding coverage that fits your financial comfort zone while protecting against major expenses.";
       
       case 'priority':
         if (lowerOption.includes('lowest price')) {
-          return "Smart approach! Finding affordable coverage is key. We consistently advise that the cheapest plan isn't always the best value—look for plans with reasonable deductibles and no annual caps. A slightly higher premium can save thousands if your pet needs major treatment. What type of coverage do you prefer?";
+          return "Smart approach! Finding affordable coverage is key. We consistently advise that the cheapest plan isn't always the best value—look for plans with reasonable deductibles and no annual caps. A slightly higher premium can save thousands if your pet needs major treatment.";
         }
         if (lowerOption.includes('best coverage')) {
-          return "Excellent choice! Comprehensive protection is valuable. The best coverage typically includes hereditary conditions, alternative therapies, and behavioral treatments. We recommend plans covering 80-90% of eligible expenses with annual limits of $10K+. What coverage type interests you?";
+          return "Excellent choice! Comprehensive protection is valuable. The best coverage typically includes hereditary conditions, alternative therapies, and behavioral treatments. We recommend plans covering 80-90% of eligible expenses with annual limits of $10K+.";
         }
         if (lowerOption.includes('fastest claims')) {
-          return "That's important! Quick claims processing makes a difference. The fastest providers process claims in 2-5 business days, with some offering direct pay to vets. This can be crucial during emergencies when you need immediate care approval. What coverage do you need?";
+          return "That's important! Quick claims processing makes a difference. The fastest providers process claims in 2-5 business days, with some offering direct pay to vets. This can be crucial during emergencies when you need immediate care approval.";
         }
-        return "Perfect! Balancing cost, coverage, and service quality leads to the highest customer satisfaction. We recommend prioritizing based on your pet's specific needs and your financial situation. Let me ask about the type of coverage you're looking for.";
+        return "Perfect! Balancing cost, coverage, and service quality leads to the highest customer satisfaction. We recommend prioritizing based on your pet's specific needs and your financial situation.";
       
       case 'coverageType':
         if (lowerOption.includes('accident only')) {
@@ -328,7 +358,7 @@ export const ChatOverlay: React.FC<ChatOverlayProps> = ({
         return "Thanks for that information! Coverage type should align with your pet's age, breed risks, and your preventive care habits. The right choice varies by individual circumstances.";
       
       default:
-        return "Perfect! The best pet insurance decision is an informed one. Let me continue with the next question.";
+        return "Perfect! The best pet insurance decision is an informed one.";
     }
   };
 
@@ -344,13 +374,16 @@ export const ChatOverlay: React.FC<ChatOverlayProps> = ({
     
     setTimeout(() => {
       addBotMessageWithDelay(acknowledgment, undefined, true, () => {
-        const nextIndex = currentQuestionIndex + 1;
-        setCurrentQuestionIndex(nextIndex);
-        if (nextIndex < CONVERSATION_FLOW.length) {
-          setTimeout(() => askNextQuestion(nextIndex), 500);
-        } else {
-          showResults();
-        }
+        // Wait briefly after acknowledgment completes before asking next question
+        setTimeout(() => {
+          const nextIndex = currentQuestionIndex + 1;
+          setCurrentQuestionIndex(nextIndex);
+          if (nextIndex < CONVERSATION_FLOW.length) {
+            askNextQuestion(nextIndex);
+          } else {
+            showResults();
+          }
+        }, 600); // Brief pause to let user read acknowledgment
       });
     }, 400);
   };
@@ -459,21 +492,24 @@ CRITICAL: Respond ONLY with a valid JSON object in this exact format:
       if (parsed.confidence === 'high') {
         acknowledgment = getAcknowledgmentMessage(parsed.extracted_value, currentQuestion.field);
       } else if (parsed.confidence === 'medium') {
-        acknowledgment = `Thanks! I think you mentioned "${parsed.extracted_value}". Being specific about your needs helps us provide the most accurate recommendations. Let me continue with the next question.`;
+        acknowledgment = `Thanks! I think you mentioned "${parsed.extracted_value}". Being specific about your needs helps us provide the most accurate recommendations.`;
       } else {
-        acknowledgment = "Got it! Even uncertain preferences help us narrow down the best options for you. Let me move on to the next question.";
+        acknowledgment = "Got it! Even uncertain preferences help us narrow down the best options for you.";
       }
 
       setTimeout(() => {
         addBotMessageWithDelay(acknowledgment, undefined, true, () => {
-          const nextIndex = currentQuestionIndex + 1;
-          setCurrentQuestionIndex(nextIndex);
-          if (nextIndex < CONVERSATION_FLOW.length) {
-            setTimeout(() => askNextQuestion(nextIndex), 500);
-          } else {
-            showResults();
-          }
           setIsProcessing(false);
+          // Wait briefly after acknowledgment completes before asking next question
+          setTimeout(() => {
+            const nextIndex = currentQuestionIndex + 1;
+            setCurrentQuestionIndex(nextIndex);
+            if (nextIndex < CONVERSATION_FLOW.length) {
+              askNextQuestion(nextIndex);
+            } else {
+              showResults();
+            }
+          }, 600); // Brief pause to let user read acknowledgment
         });
       }, 400);
     } catch (error) {
@@ -689,7 +725,10 @@ CRITICAL: Respond ONLY with a valid JSON object in this exact format:
         "Hi! 👋 I'll help you find the perfect pet insurance provider. Let's get started!", 
         undefined, 
         true, 
-        () => askNextQuestion()
+        () => {
+          // Wait briefly before asking first question
+          setTimeout(() => askNextQuestion(), 600);
+        }
       );
     }, 300);
   };
@@ -732,13 +771,13 @@ CRITICAL: Respond ONLY with a valid JSON object in this exact format:
       let initialPreferences: Partial<UserPreferences> = {};
       
       if (promptText.includes("Cheapest") || promptText.includes("cheapest")) {
-        botResponse = "Great question! I'll help you find the most affordable pet insurance options. Let me ask you a few quick questions to find the perfect match.";
+        botResponse = "Great question! I'll help you find the most affordable pet insurance options.";
         initialPreferences = { priority: 'lowest price' };
       } else if (promptText.includes("Best coverage") || promptText.includes("cat")) {
-        botResponse = "Perfect! I'll help you find comprehensive coverage options for cats. Let me ask a few questions to personalize your recommendations.";
+        botResponse = "Perfect! I'll help you find comprehensive coverage options for cats.";
         initialPreferences = { petType: 'cat', priority: 'best coverage' };
       } else if (promptText.includes("dental")) {
-        botResponse = "Dental coverage is important! I'll help you find plans that include dental care. Let me gather some details first.";
+        botResponse = "Dental coverage is important! I'll help you find plans that include dental care.";
         initialPreferences = { coverageType: 'comprehensive with wellness', priority: 'best coverage' };
       }
       
@@ -747,9 +786,11 @@ CRITICAL: Respond ONLY with a valid JSON object in this exact format:
       
       // Add bot response and start conversation flow
       addBotMessageWithDelay(botResponse, undefined, true, () => {
-        // Start from the beginning of the conversation flow
-        setCurrentQuestionIndex(0);
-        askNextQuestion(0);
+        // Wait briefly before starting questions
+        setTimeout(() => {
+          setCurrentQuestionIndex(0);
+          askNextQuestion(0);
+        }, 600);
       });
     }, 1200);
   };
@@ -932,7 +973,7 @@ CRITICAL: Respond ONLY with a valid JSON object in this exact format:
                         <TypingText 
                           text={message.text} 
                           speed={20}
-                          onComplete={() => handleTypingComplete(originalIdx)}
+                          onComplete={() => handleTypingComplete(message.id)}
                         />
                       ) : (
                         message.text
