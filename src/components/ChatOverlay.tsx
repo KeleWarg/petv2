@@ -140,7 +140,7 @@ export const ChatOverlay: React.FC<ChatOverlayProps> = ({
         );
       }, 300);
     }
-  }, [isOpen]);
+  }, [isOpen, isChatInitialized, messages.length]);
 
   // Typing effect component
   const TypingText: React.FC<{ text: string; speed?: number; onComplete?: () => void }> = ({ 
@@ -158,13 +158,6 @@ export const ChatOverlay: React.FC<ChatOverlayProps> = ({
       onCompleteRef.current = onComplete;
     }, [onComplete]);
 
-    // Reset when text changes
-    useEffect(() => {
-      setDisplayedText('');
-      setCurrentIndex(0);
-      completedRef.current = false;
-    }, [text]);
-
     useEffect(() => {
       if (currentIndex < text.length) {
         const timer = setTimeout(() => {
@@ -178,7 +171,7 @@ export const ChatOverlay: React.FC<ChatOverlayProps> = ({
           onCompleteRef.current();
         }
       }
-    }, [currentIndex, text, speed]); // Remove onComplete from deps
+    }, [currentIndex, text, speed]);
 
     return <span>{displayedText}</span>;
   };
@@ -280,19 +273,20 @@ export const ChatOverlay: React.FC<ChatOverlayProps> = ({
     }]);
   };
 
-  const askNextQuestion = (questionIndex?: number) => {
+  const askNextQuestion = (questionIndex?: number, prefsToCheck?: UserPreferences) => {
     const index = questionIndex !== undefined ? questionIndex : currentQuestionIndex;
+    const prefs = prefsToCheck || userPreferences;
     
     if (index < CONVERSATION_FLOW.length) {
       const question = CONVERSATION_FLOW[index];
       
       // Check if this question has already been answered via prompt
-      if (userPreferences[question.field]) {
+      if (prefs[question.field]) {
         // Skip this question and move to the next one
         const nextIndex = index + 1;
         setCurrentQuestionIndex(nextIndex);
         if (nextIndex < CONVERSATION_FLOW.length) {
-          setTimeout(() => askNextQuestion(nextIndex), 500);
+          setTimeout(() => askNextQuestion(nextIndex, prefs), 500);
         } else {
           showResults();
         }
@@ -789,7 +783,7 @@ CRITICAL: Respond ONLY with a valid JSON object in this exact format:
         // Wait briefly before starting questions
         setTimeout(() => {
           setCurrentQuestionIndex(0);
-          askNextQuestion(0);
+          askNextQuestion(0, initialPreferences);  // Pass preferences directly
         }, 600);
       });
     }, 1200);
@@ -847,7 +841,7 @@ CRITICAL: Respond ONLY with a valid JSON object in this exact format:
               const originalIdx = messages.length - 1 - reversedIdx;
               return (
               <div 
-                key={`message-${originalIdx}-${message.timestamp.getTime()}`}
+                key={message.id}
                 className="transform transition-all duration-300 ease-out"
                 style={{
                   animation: 'messageSlideIn 0.3s ease-out',
