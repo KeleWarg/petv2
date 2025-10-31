@@ -20,6 +20,7 @@ interface ContentSectionProps {
 }
 
 export const ContentSection = ({ onOpenChat, quickDiveRef, onShowTopPicks, onShowDiveIntoData, showTopPicks, showDiveIntoData }: ContentSectionProps): JSX.Element => {
+  // FORCE REBUILD - Author fix v2
   const [showAllAuthors, setShowAllAuthors] = useState(false);
   
   const breadcrumbItems = [
@@ -115,6 +116,95 @@ export const ContentSection = ({ onOpenChat, quickDiveRef, onShowTopPicks, onSho
               <p className="w-full max-w-full font-fixed-styles-utility-medium-regular font-[number:var(--fixed-styles-utility-medium-regular-font-weight)] text-[#333333] text-[length:var(--fixed-styles-utility-medium-regular-font-size)] tracking-[var(--fixed-styles-utility-medium-regular-letter-spacing)] leading-[var(--fixed-styles-utility-medium-regular-line-height)] [font-style:var(--fixed-styles-utility-medium-regular-font-style)] constrain-text">
                 Authored &amp; Verified: Sep 12, 2025, 9:05pm
               </p>
+
+              {/* Author attribution - Mobile */}
+              <div className="sm:hidden flex flex-col items-start gap-2 mt-3">
+              <div className="inline-flex items-center gap-2 relative">
+                <img
+                  className="w-8 h-8 rounded-3xl object-cover flex-shrink-0"
+                  alt="Author"
+                  src={authors[0].image}
+                />
+                <div className="inline-flex flex-col items-start relative">
+                  <div className="inline-flex items-center gap-0.5 relative">
+                    <span className="[font-family:'Work_Sans',Helvetica] font-semibold text-[#333333] text-xs tracking-[0] leading-[16px] break-words">
+                      {authors[0].type}
+                    </span>
+                    <span className="[font-family:'Work_Sans',Helvetica] font-semibold text-[#333333] text-xs tracking-[0] leading-[16px] underline break-words">
+                      {authors[0].name}
+                    </span>
+                  </div>
+                  <span className="[font-family:'Work_Sans',Helvetica] font-normal text-[#333333] text-xs tracking-[0] leading-4 break-words">
+                    {authors[0].role}
+                  </span>
+                </div>
+              </div>
+              
+              {/* Additional authors - shown when expanded */}
+              {showAllAuthors && (
+                <div className="flex flex-col gap-2">
+                  {authors.slice(1).map((author, index) => (
+                    <div key={index + 1} className="inline-flex items-center gap-2 relative">
+                      <img
+                        className="w-8 h-8 rounded-3xl object-cover flex-shrink-0"
+                        alt="Author"
+                        src={author.image}
+                      />
+                      <div className="inline-flex flex-col items-start relative">
+                        <div className="inline-flex items-center gap-0.5 relative">
+                          <span className="[font-family:'Work_Sans',Helvetica] font-semibold text-[#333333] text-xs tracking-[0] leading-[16px] break-words">
+                            {author.type}
+                          </span>
+                          <span className="[font-family:'Work_Sans',Helvetica] font-semibold text-[#333333] text-xs tracking-[0] leading-[16px] underline break-words">
+                            {author.name}
+                          </span>
+                        </div>
+                        <span className="[font-family:'Work_Sans',Helvetica] font-normal text-[#333333] text-xs tracking-[0] leading-4 break-words">
+                          {author.role}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              
+              {/* Toggle CTA */}
+              <button
+                onClick={() => setShowAllAuthors(!showAllAuthors)}
+                className="[font-family:'Work_Sans',Helvetica] font-normal text-[#007AC8] text-xs tracking-[0] leading-4 break-words cursor-pointer hover:underline transition-all duration-200"
+              >
+                {showAllAuthors ? 'Show less' : '& 2 others'}
+              </button>
+            </div>
+
+            {/* Author attribution - Desktop */}
+            <div className="hidden sm:inline-flex items-center gap-6 sm:gap-10 relative flex-wrap mt-3">
+              {authors.map((author, index) => (
+                <div
+                  key={index}
+                  className="inline-flex items-center gap-2 sm:gap-3 relative"
+                >
+                  <img
+                    className="w-8 h-8 sm:w-10 sm:h-10 rounded-3xl object-cover flex-shrink-0"
+                    alt="Author"
+                    src={author.image}
+                  />
+                  <div className="inline-flex flex-col items-start relative">
+                    <div className="inline-flex items-center gap-0.5 relative">
+                      <span className="[font-family:'Work_Sans',Helvetica] font-semibold text-[#333333] text-xs sm:text-sm tracking-[0] leading-[16px] sm:leading-[19.6px] break-words">
+                        {author.type}
+                      </span>
+                      <span className="[font-family:'Work_Sans',Helvetica] font-semibold text-[#333333] text-xs sm:text-sm tracking-[0] leading-[16px] sm:leading-[19.6px] underline break-words">
+                        {author.name}
+                      </span>
+                    </div>
+                    <span className="[font-family:'Work_Sans',Helvetica] font-normal text-[#333333] text-xs tracking-[0] leading-4 break-words">
+                      {author.role}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
             </div>
           </div>
 
@@ -213,97 +303,6 @@ export const ContentSection = ({ onOpenChat, quickDiveRef, onShowTopPicks, onSho
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-
-        <div className="flex flex-col w-full items-start gap-3 sm:gap-4 relative">
-          {/* Mobile view - show first author and expandable others */}
-          <div className="sm:hidden flex flex-col items-start gap-2">
-            <div className="inline-flex items-center gap-2 relative">
-              <img
-                className="w-8 h-8 rounded-3xl object-cover flex-shrink-0"
-                alt="Author"
-                src={authors[0].image}
-              />
-              <div className="inline-flex flex-col items-start relative">
-                <div className="inline-flex items-center gap-0.5 relative">
-                  <span className="[font-family:'Work_Sans',Helvetica] font-semibold text-[#333333] text-xs tracking-[0] leading-[16px] break-words">
-                    {authors[0].type}
-                  </span>
-                  <span className="[font-family:'Work_Sans',Helvetica] font-semibold text-[#333333] text-xs tracking-[0] leading-[16px] underline break-words">
-                    {authors[0].name}
-                  </span>
-                </div>
-                <span className="[font-family:'Work_Sans',Helvetica] font-normal text-[#333333] text-xs tracking-[0] leading-4 break-words">
-                  {authors[0].role}
-                </span>
-              </div>
-            </div>
-            
-            {/* Additional authors - shown when expanded */}
-            {showAllAuthors && (
-              <div className="flex flex-col gap-2">
-                {authors.slice(1).map((author, index) => (
-                  <div key={index + 1} className="inline-flex items-center gap-2 relative">
-                    <img
-                      className="w-8 h-8 rounded-3xl object-cover flex-shrink-0"
-                      alt="Author"
-                      src={author.image}
-                    />
-                    <div className="inline-flex flex-col items-start relative">
-                      <div className="inline-flex items-center gap-0.5 relative">
-                        <span className="[font-family:'Work_Sans',Helvetica] font-semibold text-[#333333] text-xs tracking-[0] leading-[16px] break-words">
-                          {author.type}
-                        </span>
-                        <span className="[font-family:'Work_Sans',Helvetica] font-semibold text-[#333333] text-xs tracking-[0] leading-[16px] underline break-words">
-                          {author.name}
-                        </span>
-                      </div>
-                      <span className="[font-family:'Work_Sans',Helvetica] font-normal text-[#333333] text-xs tracking-[0] leading-4 break-words">
-                        {author.role}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-            
-            {/* Toggle CTA */}
-            <button
-              onClick={() => setShowAllAuthors(!showAllAuthors)}
-              className="[font-family:'Work_Sans',Helvetica] font-normal text-[#007AC8] text-xs tracking-[0] leading-4 break-words cursor-pointer hover:underline transition-all duration-200"
-            >
-              {showAllAuthors ? 'Show less' : '& 2 others'}
-            </button>
-          </div>
-
-          {/* Desktop view - show all authors */}
-          <div className="hidden sm:inline-flex items-center gap-6 sm:gap-10 relative flex-wrap">
-            {authors.map((author, index) => (
-              <div
-                key={index}
-                className="inline-flex items-center gap-2 sm:gap-3 relative"
-              >
-                <img
-                  className="w-8 h-8 sm:w-10 sm:h-10 rounded-3xl object-cover flex-shrink-0"
-                  alt="Author"
-                  src={author.image}
-                />
-                <div className="inline-flex flex-col items-start relative">
-                  <div className="inline-flex items-center gap-0.5 relative">
-                    <span className="[font-family:'Work_Sans',Helvetica] font-semibold text-[#333333] text-xs sm:text-sm tracking-[0] leading-[16px] sm:leading-[19.6px] break-words">
-                      {author.type}
-                    </span>
-                    <span className="[font-family:'Work_Sans',Helvetica] font-semibold text-[#333333] text-xs sm:text-sm tracking-[0] leading-[16px] sm:leading-[19.6px] underline break-words">
-                      {author.name}
-                    </span>
-                  </div>
-                  <span className="[font-family:'Work_Sans',Helvetica] font-normal text-[#333333] text-xs tracking-[0] leading-4 break-words">
-                    {author.role}
-                  </span>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
             </div>
